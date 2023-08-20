@@ -6,9 +6,9 @@ app = Flask(__name__)
 
 
 
-@app.route("/",methods=["GET","POST"])
+@app.route("/", methods=["GET", "POST"])
 def homePage():
-    if request.method == "GET": 
+    if request.method == "GET":
         return render_template("index.html")
     if request.method == "POST":
         # Load the CSV file as a DataFrame
@@ -31,7 +31,44 @@ def homePage():
         # Save the updated DataFrame to the CSV file
         users_df.to_csv('users.csv', index=False)
 
-        return "Registration successful! You can now log in."
+        return redirect("/login")
+
+
+@app.route("/login", methods=["GET", "POST"])
+def loginPage():
+    if request.method == "GET":
+        return render_template("login.html")
+    if request.method == "POST":
+        # Load the CSV file as a DataFrame
+        users_df = pd.read_csv('users.csv')
+
+        # Get user input from the form
+        username = request.form.get("username")
+        password = request.form.get("password")
+
+        # Extract username and password from the DataFrame
+        user_data = users_df[users_df['username'] == username]
+        
+        if user_data.empty:
+            return "Invalid username. Please try again."
+
+        stored_encoded_password = user_data.iloc[0]['password']
+
+        # Decode the stored Base64-encoded password
+        stored_password = base64.b64decode(stored_encoded_password.encode()).decode('utf-8')
+
+        # Compare the decoded password with the provided password
+        if password == stored_password and username == user_data.iloc[0]['username']:
+            return "Login completed successfully!"
+        else:
+            return "Invalid password. Please try again."
 
 if __name__ == "__main__":
-    app.run(debug=True,host="0.0.0.0")
+    app.run(debug=True, host="0.0.0.0")
+
+
+
+
+
+
+
