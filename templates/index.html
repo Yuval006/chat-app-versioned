@@ -6,13 +6,12 @@
     <title>Login Menu</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href="{{ url_for('static', filename='main.css') }}">
-    <script src='main.js'></script>
 </head>
 <body>
     
     <div class="login-box">
         <h2>Log in</h2>
-        <form>
+        <form id="login-form">
           <div class="user-box">
             <input type="text" name="username" required="">
             <label>User name or email</label>
@@ -21,15 +20,37 @@
             <input type="password" name="password" required="">
             <label>Password</label>
           </div>
-          <a href="#">
+          <button type="button" id="submit-button">
             <span></span>
             <span></span>
             <span></span>
             <span></span>
             Submit
-          </a>
+          </button>
         </form>
+        <div id="response"></div>
       </div>
 
+      <script>
+        // Add an event listener to the submit button
+        document.getElementById("submit-button").addEventListener("click", function() {
+            var form = document.getElementById("login-form");
+            var formData = new FormData(form);
+
+            // Send a POST request to the server
+            fetch("/", {
+                method: "POST",
+                body: formData,
+            })
+            .then(response => response.text())
+            .then(data => {
+                // Display the response in the "response" div
+                document.getElementById("response").innerText = data;
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
+        });
+      </script>
 </body>
 </html>

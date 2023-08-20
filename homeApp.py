@@ -4,14 +4,15 @@ import base64
 
 app = Flask(__name__)
 
-# Load the CSV file as a DataFrame
-users_df = pd.read_csv('users.csv')
+
 
 @app.route("/",methods=["GET","POST"])
 def homePage():
     if request.method == "GET": 
         return render_template("index.html")
     if request.method == "POST":
+        # Load the CSV file as a DataFrame
+        users_df = pd.read_csv('users.csv')
         # Get user input from the form
         username = request.form.get("username")
         password = request.form.get("password")
