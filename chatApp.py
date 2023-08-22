@@ -1,11 +1,11 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for,session
+from flask_session import Session
 import pandas as pd
 import base64
 import os
 import datetime
 global rooms_path
-global user
-user = "Guest"
+
 
 
 # Get the value of the environment variable 'rooms_path'
@@ -14,6 +14,10 @@ rooms_path = os.environ.get('ROOMS_PATH')
 
 
 app = Flask(__name__)
+
+# Configure the app to use sessions
+app.config['SESSION_TYPE'] = 'filesystem'
+Session(app)
 
 @app.route("/", methods=["GET", "POST"])
 @app.route("/register", methods=["GET", "POST"])
@@ -24,7 +28,6 @@ def homePage():
 
 
     if request.method == "POST":
-        global user
         # Load the CSV file as a DataFrame
         users_df = pd.read_csv('users.csv')
         # Get user input from the form
@@ -48,8 +51,6 @@ def homePage():
         # Save the updated DataFrame to the CSV file
         users_df.to_csv('users.csv', index=False)
         
-        # Save global user for future reference
-        user = username
 
         return redirect(url_for("loginPage"))
 
@@ -62,6 +63,8 @@ def loginPage():
 
 
     if request.method == "POST":
+        global user
+
         # Load the CSV file as a DataFrame
         users_df = pd.read_csv('users.csv')
 
@@ -69,6 +72,7 @@ def loginPage():
         username = request.form.get("username")
         password = request.form.get("password")
 
+        
         # Extract username and password from the DataFrame
         user_data = users_df[users_df['username'] == username]
         
@@ -80,8 +84,13 @@ def loginPage():
         # Decode the stored Base64-encoded password
         stored_password = base64.b64decode(stored_encoded_password.encode()).decode('utf-8')
 
+        
+
         # Compare the decoded password with the provided password
         if password == stored_password and username == user_data.iloc[0]['username']:
+            # Creating a new session
+            session['username'] = username
+
             return redirect(url_for("lobbyPage"))
         else:
             return "Invalid password. Please try again."
@@ -138,6 +147,7 @@ def chatRoom(room):
 @app.route("/api/chat/<room>",methods=["GET","POST"])
 def getChat(room):
     data = ''
+    user = session['username']
     # Create the full file path by joining the folder path and file name
     file_path = os.path.join(rooms_path, f"{room}.txt")
 
@@ -157,7 +167,11 @@ def getChat(room):
         return data
     
 
-    
+@app.route('/logout')
+def logout():
+  # Remove the username from the session
+  session.pop('username', None)
+  return redirect(url_for("loginPage"))
 
 if __name__ == "__main__":
     # Check if the folder path exists

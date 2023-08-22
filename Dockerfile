@@ -14,7 +14,7 @@ WORKDIR /app
 COPY . .
 
 # Install the required packages
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install -r requirements.txt
 
 # Expose the port your application will run on
 EXPOSE 5000

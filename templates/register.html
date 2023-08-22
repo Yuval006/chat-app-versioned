@@ -3,18 +3,10 @@
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Register Menu</title>
+    <title>ChatApp register Menu</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href="{{ url_for('static', filename='main.css') }}">
 </head>
-<script>
-  // JavaScript to update form action when a room is selected
-  document.getElementById('room').addEventListener('change', function() {
-    var selectedRoom = this.value;
-    var form = document.getElementById('enter-room-form');
-    form.action = '/chat/' + selectedRoom;
-  });
-</script>
 <body>
     
     <div class="login-box">
