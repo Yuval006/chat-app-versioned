@@ -10,7 +10,7 @@ global rooms_path
 
 # Get the value of the environment variable 'rooms_path'
 rooms_path = os.environ.get('ROOMS_PATH')
-
+users_path = os.environ.get('USERS_PATH')
 
 
 app = Flask(__name__)
@@ -29,7 +29,7 @@ def homePage():
 
     if request.method == "POST":
         # Load the CSV file as a DataFrame
-        users_df = pd.read_csv('users.csv')
+        users_df = pd.read_csv(users_path)
         # Get user input from the form
         username = request.form.get("username")
         password = request.form.get("password")
@@ -49,7 +49,7 @@ def homePage():
         users_df = users_df.append(new_user, ignore_index=True)
 
         # Save the updated DataFrame to the CSV file
-        users_df.to_csv('users.csv', index=False)
+        users_df.to_csv(users_path, index=False)
         
 
         return redirect(url_for("loginPage"))
@@ -66,7 +66,7 @@ def loginPage():
         global user
 
         # Load the CSV file as a DataFrame
-        users_df = pd.read_csv('users.csv')
+        users_df = pd.read_csv(users_path)
 
         # Get user input from the form
         username = request.form.get("username")
