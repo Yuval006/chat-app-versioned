@@ -1,3 +1,3 @@
 #!/bin/bash
-docker rmi -f bestpracticeimg:1.0.0
+docker rmi -f bestpracticeimg
 docker rm -f bestpracticecont

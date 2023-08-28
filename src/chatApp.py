@@ -63,7 +63,6 @@ def loginPage():
 
 
     if request.method == "POST":
-        global user
 
         # Load the CSV file as a DataFrame
         users_df = pd.read_csv(users_path)
@@ -129,7 +128,7 @@ def lobbyPage():
             
             # Creating a new file for room messages
             open(file_path, 'w').close()
-        
+
             # Updating room names
             room_names = getRoomNames()
 
@@ -152,11 +151,20 @@ def getChat(room):
     file_path = os.path.join(rooms_path, f"{room}.txt")
 
     if request.method == "POST":
-        msg = request.form["msg"]
-        timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        fullmsg = f'[{timestamp}] {user}: {msg}\n'
-        with open(file_path,'a+') as file: 
-            file.write(f'{fullmsg}')
+        if request.args.get('clear') == "true":
+            print("test")
+            with open(file_path,'r+') as file:
+                file.truncate(0)
+        
+        else:
+            msg = request.form["msg"]
+            timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            fullmsg = f'[{timestamp}] {user}: {msg}\n'
+            with open(file_path,'a+') as file: 
+                file.write(f'{fullmsg}')
+        
+        
+        
         return render_template("chat.html", room=room)
     
 

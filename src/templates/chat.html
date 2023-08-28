@@ -30,15 +30,23 @@
         $("#sendBtn").click(sendmessage)
         window.setTimeout(updateChat, 1500);
       });
-  
+      
+      function clearChat() {
+    $.post(room() + "?clear=true", function(data) {
+        // Handle the response if needed
+        // For example, you can update the chatbox with a message like "Chat cleared."
+    });
+}
     </script>
     <body>
       <h1>Chat Room: {{ room }}</h1>
 
       <form id="inform" action="/api/chat" method="POST">
         Message:<input name="msg" type=text>
-        <input id="sendBtn" type="button" value="send">
+        <input id="sendBtn" type="button" value="Send">
+        <input id="clearBtn" type="button" value="Clear" onclick="clearChat()">
       </form>
+      
       <pre id="chatbox">Loading...</pre>
       
       <br>

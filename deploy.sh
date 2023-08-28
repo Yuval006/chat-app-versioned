@@ -5,7 +5,7 @@ COMMIT_HASH=$2
 # Error handling must get 2 inputs from user
 if [ $# -ne 2 ]
 then
-    echo "USAGE: $0 <version> <commit-hash>"
+    echo "USAGE: $0 '<version>' '<commit-hash>'"
     exit 1
 fi
 
