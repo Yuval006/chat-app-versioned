@@ -1,1 +1,1 @@
-docker exec -it homeappcont bash
+docker exec -it bestpracticecont bash

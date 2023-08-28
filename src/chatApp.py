@@ -173,6 +173,11 @@ def logout():
   session.pop('username', None)
   return redirect(url_for("loginPage"))
 
+
+@app.route('/health')
+def healthcheck():
+    return "OK", 200
+
 if __name__ == "__main__":
     # Check if the folder path exists
     if not os.path.exists(rooms_path):

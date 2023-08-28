@@ -1,2 +1,2 @@
-docker build -t homeappimg .
-docker run -it -v ./rooms:/app/rooms -v ./docs/users.csv:/app/users.csv -p 5000:5000  --name homeappcont homeappimg
+docker build -t bestpracticeimg:1.0.0 -f thin.dockerfile .
+docker run -d --cpus="0.1" --memory="256m" -p 8000:5000  --name bestpracticecont bestpracticeimg:1.0.0

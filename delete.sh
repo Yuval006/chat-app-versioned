@@ -1,3 +1,3 @@
 #!/bin/bash
-docker rmi -f homeappimg
-docker rm homeappcont
+docker rmi -f bestpracticeimg:1.0.0
+docker rm -f bestpracticecont
