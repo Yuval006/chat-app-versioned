@@ -35,19 +35,21 @@ if [ $# -eq 0 ]
 then
     show_usage
 fi
+flag=$1
+shift
 
-case "$1" in
+case $flag in
   -i|--init)
-    init
+    init $@
     ;;
   -d|--delete)
-    delete
+    delete $@
     ;;
   -e|--exec)
     debug
     ;;
   -de|--deploy)
-    deploy
+    deploy $@
     ;;
   -p|--prune)
     prune

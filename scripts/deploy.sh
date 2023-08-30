@@ -10,7 +10,7 @@ then
 fi
 
 # Tag & Build thin.dockerfile
-docker build -t "bestpracticeimg:$VERSION"  -f thin.dockerfile .
+docker build -t "chat-app-image:$VERSION"  -f thin.dockerfile .
 
 # Error handling: Checks if build is completed succefuly
 if [ $? -eq 0 ]

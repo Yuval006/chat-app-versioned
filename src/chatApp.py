@@ -152,6 +152,11 @@ def getChat(room):
 
     if request.method == "POST":
         # Clear feature added with bug
+        # if request.args.get('clear') == "true":
+        #     with open(file_path,'r+') as f:
+        #         truncate(0)
+
+        # Clear feature fixed
         if request.args.get('clear') == "true":
             with open(file_path,'r') as f:
                 lines = f.readlines()

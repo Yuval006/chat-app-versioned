@@ -1,5 +1,5 @@
 #!/bin/bash
 debug(){
-docker exec -it bestpracticecont bash
+docker exec -it chat-app-cont bash
 }
 
