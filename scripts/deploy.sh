@@ -1,5 +1,5 @@
 #!/bin/bash
-
+deploy(){
 VERSION=$1
 COMMIT_HASH=$2
 # Error handling must get 2 inputs from user
@@ -22,3 +22,4 @@ else
     echo "Error: Build failed, Fix dockerfile and try again"
 fi
 
+}

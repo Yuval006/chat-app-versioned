@@ -151,10 +151,14 @@ def getChat(room):
     file_path = os.path.join(rooms_path, f"{room}.txt")
 
     if request.method == "POST":
+        # Clear feature added with bug
         if request.args.get('clear') == "true":
-            print("test")
-            with open(file_path,'r+') as file:
-                file.truncate(0)
+            with open(file_path,'r') as f:
+                lines = f.readlines()
+            with open(file_path,'w') as f:
+                for line in lines:
+                    if f"{session['username']}:" != line.split(" ")[2]:
+                        f.write(line)
         
         else:
             msg = request.form["msg"]
@@ -171,7 +175,6 @@ def getChat(room):
     elif request.method == "GET":
         with open(file_path, 'r') as file:
                 data = file.read()
-        print(data)
         return data
     
 

@@ -25,10 +25,10 @@ ENV ROOMS_PATH="/app/rooms"
 ENV USERS_PATH="/app/docs/users.csv"
 
 
-RUN apt-get -y update
-RUN apt-get -y install curl
+# RUN apt-get -y update
+# RUN apt-get -y install curl
 
-HEALTHCHECK --interval=10s --timeout=3s CMD curl -f http://localhost:5000/health || exit 1
+# HEALTHCHECK --interval=10s --timeout=3s CMD curl -f http://localhost:5000/health || exit 1
 
 # Expose the port your application will run on
 EXPOSE 5000

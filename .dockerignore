@@ -1,5 +1,2 @@
-delete.sh
-init.sh
-debug.sh
-allinfo.sh
-pruneall.sh
+scripts
+dockerfiles
